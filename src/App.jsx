@@ -8,16 +8,18 @@ function App() {
   const [ranks, setRanks] = useState([]);
   const [newCompany, setNewCompany] = useState('');
   const [newRank, setNewRank] = useState('');
-  const [formData, setFormData] = useState({
-    company: '',
-    regNo: '',
-    soldierId: '',
-    rank: '',
-    status: 'present',
-    checkInTime: '',
-    checkOutTime: '',
-    remarks: ''
-  });
+
+const [formData, setFormData] = useState({
+  company: '',
+  regNo: '',
+  soldierId: '',
+  rank: '',
+  status: 'present',
+  attendanceDate: '',
+  remarks: ''
+});
+
+
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
   const [filters, setFilters] = useState({ company: '', date: '', searchRegNo: '' });
   const [selectedCompany, setSelectedCompany] = useState('Alpha');
@@ -134,24 +136,30 @@ function App() {
       showAlert('⚠️ Please fill all required fields', 'error');
       return;
     }
+  
     const record = {
-      ...formData,
-      id: Date.now(),
-      date: new Date().toLocaleDateString('en-IN'),
-      time: new Date().toLocaleTimeString('en-IN')
-    };
+  ...formData,
+  id: Date.now(),
+  date: formData.attendanceDate || new Date().toLocaleDateString('en-IN'),
+  time: new Date().toLocaleTimeString('en-IN')
+};
+
+
+
     setRecords([...records, record]);
     showAlert(`✅ Attendance marked for ${formData.soldierId} (${formData.regNo})!`, 'success');
-    setFormData({
-      company: '',
-      regNo: '',
-      soldierId: '',
-      rank: '',
-      status: 'present',
-      checkInTime: '',
-      checkOutTime: '',
-      remarks: ''
-    });
+ 
+  setFormData({
+  company: '',
+  regNo: '',
+  soldierId: '',
+  rank: '',
+  status: 'present',
+  attendanceDate: '',
+  remarks: ''
+});
+
+
   };
 
   const deleteRecord = (id) => {
@@ -185,9 +193,10 @@ function App() {
       showAlert('⚠️ No records to export', 'error');
       return;
     }
-    let csv = 'Company,Regiment No,Soldier Name,Rank,Status,Check-In,Check-Out,Remarks,Date\n';
+    let csv = 'Company,Regiment No,Soldier Name,Rank,Status,Remarks,Attendance Date,Remarks\n';
     records.forEach(record => {
-      csv += `"${record.company}","${record.regNo}","${record.soldierId}","${record.rank}","${record.status}","${record.checkInTime || '-'}","${record.checkOutTime || '-'}","${record.remarks || '-'}","${record.date}"\n`;
+    csv += `"${record.company}","${record.regNo}","${record.soldierId}","${record.rank}","${record.status}","${record.date}","${record.remarks || '-'}"\n`;
+  
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -428,24 +437,16 @@ function App() {
                   </select>
                 </div>
 
-                <div className="form-group">
-                  <label>Status</label>
-                  <select value={formData.status} onChange={(e) => setFormData({ ...formData, status: e.target.value })}>
-                    <option value="present">Present</option>
-                    <option value="absent">Absent</option>
-                    <option value="leave">On Leave</option>
-                    <option value="duty">Special Duty</option>
-                  </select>
-                </div>
+            <div className="form-group">
+  <label>Attendance Date *</label>
+  <input 
+    type="date" 
+    value={formData.attendanceDate}
+    onChange={(e) => setFormData({ ...formData, attendanceDate: e.target.value })}
+    max={new Date().toISOString().split('T')[0]}
+  />
+</div>
 
-                <div className="form-group">
-                  <label>Check-In Time</label>
-                  <input 
-                    type="time" 
-                    value={formData.checkInTime}
-                    onChange={(e) => setFormData({ ...formData, checkInTime: e.target.value })}
-                  />
-                </div>
 
                 <div className="form-group">
                   <label>Check-Out Time</label>
