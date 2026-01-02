@@ -1,3 +1,11 @@
+# Battalion 161 - Military Attendance Management System
+
+🔗 **Live Demo:** [https://battalion-attendance.vercel.app](https://battalion-attendance.vercel.app)
+
+A modern web application for managing military personnel attendance...
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
