@@ -169,6 +169,8 @@ header p {
 
 
 /* ========== DASHBOARD GRID ========== */
+
+/* ========== DASHBOARD GRID ========== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
@@ -177,6 +179,89 @@ header p {
   width: 100%;
 }
 
+.company-card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 12px;
+  border: 2px solid var(--border-color);
+  border-left: 5px solid var(--military-gold);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.company-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 15px;
+}
+
+.company-header h3 {
+  color: var(--military-gold);
+  font-size: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.total-count {
+  text-align: right;
+}
+
+.total-count .label {
+  color: var(--text-dim);
+  font-size: 12px;
+  text-transform: uppercase;
+  display: block;
+  margin-bottom: 5px;
+}
+
+.total-count .count {
+  font-size: 36px;
+  font-weight: bold;
+  color: var(--military-gold);
+  display: block;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.stat-card {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-3px);
+}
+
+.stat-card .label {
+  color: var(--text-dim);
+  font-size: 12px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.stat-card .value {
+  font-size: 32px;
+  font-weight: bold;
+  display: block;
+}
+
+.stat-card.present .value { color: var(--success-green); }
+.stat-card.leave .value { color: var(--warning-orange); }
+.stat-card.others .value { color: var(--accent-blue); }
+
+/* Responsive Dashboard */
 @media (min-width: 768px) {
   .dashboard-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -189,6 +274,14 @@ header p {
     grid-template-columns: repeat(2, 1fr);
     gap: 30px;
   }
+  
+  .company-card {
+    padding: 30px;
+  }
+  
+  .company-header h3 {
+    font-size: 24px;
+  }
 }
 
 @media (min-width: 1440px) {
@@ -197,72 +290,6 @@ header p {
     gap: 30px;
   }
 }
-
-
-.company-card {
-  background: var(--card-bg);
-  padding: 25px;
-  border-radius: 12px;
-  border: 2px solid var(--border-color);
-  border-left: 5px solid var(--military-gold);
-}
-
-.company-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-
-.company-header h3 {
-  color: var(--military-gold);
-  font-size: 22px;
-}
-
-.total-count {
-  text-align: right;
-}
-
-.total-count .label {
-  color: var(--text-dim);
-  font-size: 12px;
-  text-transform: uppercase;
-}
-
-.total-count .count {
-  font-size: 36px;
-  font-weight: bold;
-  color: var(--military-gold);
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 15px;
-}
-
-.stat-card {
-  background: rgba(255, 255, 255, 0.05);
-  padding: 20px;
-  border-radius: 8px;
-  text-align: center;
-}
-
-.stat-card .label {
-  color: var(--text-dim);
-  font-size: 12px;
-  text-transform: uppercase;
-  margin-bottom: 8px;
-}
-
-.stat-card .value {
-  font-size: 32px;
-  font-weight: bold;
-}
-
-.stat-card.present .value { color: var(--success-green); }
-.stat-card.leave .value { color: var(--warning-orange); }
-.stat-card.others .value { color: var(--accent-blue); }
 
 
 /* ========== FORM STYLES ========== */
