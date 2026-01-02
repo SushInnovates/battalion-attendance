@@ -15,9 +15,11 @@ const [formData, setFormData] = useState({
   soldierId: '',
   rank: '',
   status: 'present',
-  attendanceDate: '',
+  leaveFrom: '',
+  leaveUpto: '',
   remarks: ''
 });
+
 
 
   const [alert, setAlert] = useState({ show: false, message: '', type: '' });
@@ -140,7 +142,7 @@ const [formData, setFormData] = useState({
     const record = {
   ...formData,
   id: Date.now(),
-  date: formData.attendanceDate || new Date().toLocaleDateString('en-IN'),
+  date: new Date().toLocaleDateString('en-IN'),
   time: new Date().toLocaleTimeString('en-IN')
 };
 
@@ -149,15 +151,17 @@ const [formData, setFormData] = useState({
     setRecords([...records, record]);
     showAlert(`✅ Attendance marked for ${formData.soldierId} (${formData.regNo})!`, 'success');
  
-  setFormData({
+ setFormData({
   company: '',
   regNo: '',
   soldierId: '',
   rank: '',
   status: 'present',
-  attendanceDate: '',
+  leaveFrom: '',
+  leaveUpto: '',
   remarks: ''
 });
+
 
 
   };
@@ -193,10 +197,13 @@ const [formData, setFormData] = useState({
       showAlert('⚠️ No records to export', 'error');
       return;
     }
-    let csv = 'Company,Regiment No,Soldier Name,Rank,Status,Remarks,Attendance Date,Remarks\n';
+
+    let csv = 'Company,Regiment No,Soldier Name,Rank,Status,Leave From,Leave Upto,Remarks,Date\n';
+
+
     records.forEach(record => {
-    csv += `"${record.company}","${record.regNo}","${record.soldierId}","${record.rank}","${record.status}","${record.date}","${record.remarks || '-'}"\n`;
-  
+  csv += `"${record.company}","${record.regNo}","${record.soldierId}","${record.rank}","${record.status}","${record.leaveFrom || '-'}","${record.leaveUpto || '-'}","${record.remarks || '-'}","${record.date}"\n`;
+
     });
     const blob = new Blob([csv], { type: 'text/csv' });
     const url = window.URL.createObjectURL(blob);
@@ -437,15 +444,27 @@ const [formData, setFormData] = useState({
                   </select>
                 </div>
 
-            <div className="form-group">
-  <label>Attendance Date *</label>
+           <div className="form-group">
+  <label>Leave From</label>
   <input 
     type="date" 
-    value={formData.attendanceDate}
-    onChange={(e) => setFormData({ ...formData, attendanceDate: e.target.value })}
-    max={new Date().toISOString().split('T')[0]}
+    value={formData.leaveFrom}
+    onChange={(e) => setFormData({ ...formData, leaveFrom: e.target.value })}
+    placeholder="Start date"
   />
 </div>
+
+<div className="form-group">
+  <label>Leave Upto</label>
+  <input 
+    type="date" 
+    value={formData.leaveUpto}
+    onChange={(e) => setFormData({ ...formData, leaveUpto: e.target.value })}
+    min={formData.leaveFrom}
+    placeholder="End date"
+  />
+</div>
+
 
 
                 <div className="form-group">
@@ -513,48 +532,54 @@ const [formData, setFormData] = useState({
             ) : (
               <div className="table-wrapper">
                 <table>
-                  <thead>
-                    <tr>
-                      <th>SI</th>
-                      <th>Regiment No</th>
-                      <th>Name</th>
-                      <th>Rank</th>
-                      <th>Company</th>
-                      <th>Status</th>
-                      <th>Date</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
+                 <thead>
+  <tr>
+    <th>SI</th>
+    <th>Regiment No</th>
+    <th>Name</th>
+    <th>Rank</th>
+    <th>Company</th>
+    <th>Status</th>
+    <th>Leave From</th>
+    <th>Leave Upto</th>
+    <th>Date</th>
+    <th>Action</th>
+  </tr>
+</thead>
+
                   <tbody>
-                    {filteredRecords.map((record, index) => (
-                      <tr key={record.id}>
-                        <td>{index + 1}</td>
-                        <td><strong style={{ color: 'var(--primary-gold)' }}>{record.regNo}</strong></td>
-                        <td>{record.soldierId}</td>
-                        <td>{record.rank}</td>
-                        <td>{record.company}</td>
-                        <td><span className={`badge ${record.status}`}>{record.status}</span></td>
-                        <td>{record.date}</td>
-                        <td>
-                          <button 
-                            onClick={() => deleteRecord(record.id)}
-                            style={{
-                              background: 'var(--accent-red)',
-                              color: 'white',
-                              border: 'none',
-                              padding: '6px 12px',
-                              borderRadius: '4px',
-                              cursor: 'pointer',
-                              fontSize: '12px',
-                              fontWeight: 600
-                            }}
-                          >
-                            🗑️
-                          </button>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
+  {filteredRecords.map((record, index) => (
+    <tr key={record.id}>
+      <td>{index + 1}</td>
+      <td><strong style={{ color: 'var(--primary-gold)' }}>{record.regNo}</strong></td>
+      <td>{record.soldierId}</td>
+      <td>{record.rank}</td>
+      <td>{record.company}</td>
+      <td><span className={`badge ${record.status}`}>{record.status}</span></td>
+      <td>{record.leaveFrom || '-'}</td>
+      <td>{record.leaveUpto || '-'}</td>
+      <td>{record.date}</td>
+      <td>
+        <button 
+          onClick={() => deleteRecord(record.id)}
+          style={{
+            background: 'var(--accent-red)',
+            color: 'white',
+            border: 'none',
+            padding: '6px 12px',
+            borderRadius: '4px',
+            cursor: 'pointer',
+            fontSize: '12px',
+            fontWeight: 600
+          }}
+        >
+          🗑️
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
+
                 </table>
               </div>
             )}
