@@ -78,9 +78,30 @@ header p {
   flex: 1;
   padding: 20px;
   padding-bottom: 100px;
-  max-width: 100%;
-  margin: 0 auto;
   width: 100%;
+  margin: 0 auto;
+}
+
+/* Remove max-width constraints for full width on all screens */
+@media (min-width: 768px) {
+  .content {
+    padding: 30px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1024px) {
+  .content {
+    padding: 40px 60px;
+    width: 100%;
+  }
+}
+
+@media (min-width: 1440px) {
+  .content {
+    padding: 40px 80px;
+    width: 100%;
+  }
 }
 
 /* ========== SECTION HEADER ========== */
@@ -146,13 +167,37 @@ header p {
   background: #d32f2f;
 }
 
+
 /* ========== DASHBOARD GRID ========== */
 .dashboard-grid {
   display: grid;
   grid-template-columns: 1fr;
   gap: 20px;
   margin-bottom: 30px;
+  width: 100%;
 }
+
+@media (min-width: 768px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 30px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+  }
+}
+
 
 .company-card {
   background: var(--card-bg);
@@ -219,6 +264,7 @@ header p {
 .stat-card.leave .value { color: var(--warning-orange); }
 .stat-card.others .value { color: var(--accent-blue); }
 
+
 /* ========== FORM STYLES ========== */
 .form-container {
   background: var(--card-bg);
@@ -226,6 +272,14 @@ header p {
   border-radius: 12px;
   border: 2px solid var(--border-color);
   margin-bottom: 30px;
+  width: 100%;
+  max-width: none; /* Remove width limit */
+}
+
+@media (min-width: 1024px) {
+  .form-container {
+    padding: 35px 40px;
+  }
 }
 
 .date-badge {
@@ -285,18 +339,30 @@ header p {
 }
 
 /* ========== TABLE STYLES ========== */
+/* ========== TABLE STYLES ========== */
 .table-wrapper {
   overflow-x: auto;
   background: var(--card-bg);
   border-radius: 12px;
   border: 2px solid var(--border-color);
+  width: 100%;
+  margin-bottom: 30px;
 }
 
 table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  min-width: 800px; /* Ensure table doesn't get too squished */
 }
+
+@media (min-width: 1024px) {
+  table {
+    font-size: 15px;
+    min-width: 100%;
+  }
+}
+
 
 table thead {
   background: rgba(212, 175, 55, 0.1);
@@ -348,7 +414,30 @@ table tbody tr:hover {
   grid-template-columns: repeat(2, 1fr);
   gap: 15px;
   margin-bottom: 30px;
+  width: 100%;
 }
+
+@media (min-width: 768px) {
+  .ranks-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .ranks-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .ranks-grid {
+    grid-template-columns: repeat(5, 1fr);
+    gap: 25px;
+  }
+}
+
 
 .rank-card {
   background: var(--card-bg);
