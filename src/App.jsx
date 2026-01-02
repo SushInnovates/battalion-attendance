@@ -467,14 +467,7 @@ const [formData, setFormData] = useState({
 
 
 
-                <div className="form-group">
-                  <label>Check-Out Time</label>
-                  <input 
-                    type="time" 
-                    value={formData.checkOutTime}
-                    onChange={(e) => setFormData({ ...formData, checkOutTime: e.target.value })}
-                  />
-                </div>
+           
               </div>
 
               <div className="form-group">
